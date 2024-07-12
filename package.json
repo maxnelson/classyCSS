@@ -1,0 +1,22 @@
+{
+  "name": "classycss",
+  "version": "1.0.0",
+  "description": "An unopinionanted CSS library",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxnelson/classyCSS.git"
+  },
+  "keywords": [
+    "CSS"
+  ],
+  "author": "Max Nelson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxnelson/classyCSS/issues"
+  },
+  "homepage": "https://github.com/maxnelson/classyCSS#readme"
+}
