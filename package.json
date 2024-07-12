@@ -1,5 +1,5 @@
 {
-  "name": "classycss",
+  "name": "@modularmoon/classycss",
   "version": "1.0.0",
   "description": "An unopinionanted CSS library",
   "main": "index.js",
