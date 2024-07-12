@@ -2,7 +2,11 @@
   "name": "@modularmoon/classycss",
   "version": "1.0.0",
   "description": "An unopinionanted CSS library",
-  "main": "index.js",
+  "main": "classycss-plugin.js",
+  "type": "module",
+  "peerDependencies": {
+    "vite": "^4.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
