@@ -16,7 +16,7 @@ export function parseJSONFileResponseData(responseData) {
     const propertyValueJoinedString = propertiesArray[index].value;
     if (
       propertyValueJoinedString !== undefined &&
-      propertyName === "align-items"
+      propertyName !== "font-weight"
     ) {
       let parsedValueObject = parsePropDefValue(propertyValueJoinedString);
       if (parsedValueObject) {
@@ -120,16 +120,20 @@ const handleArrayValueType = (
       }
     }
   } else {
-    for (let arrayObjectItem of propertyValueArray.items) {
-      console.log(arrayObjectItem);
-      if (arrayObjectItem.type === "valuespace") {
-        CSSRuleStrings += handleValuespaceValue(
-          propertyName,
-          arrayObjectItem.name,
-          valuesArray,
-          fileContent
-        );
+    if (propertyValueArray.items?.length > 0) {
+      for (let arrayObjectItem of propertyValueArray.items) {
+        console.log(arrayObjectItem);
+        if (arrayObjectItem.type === "valuespace") {
+          CSSRuleStrings += handleValuespaceValue(
+            propertyName,
+            arrayObjectItem.name,
+            valuesArray,
+            fileContent
+          );
+        }
       }
+    } else {
+      console.log("no longer an array, needs parsing");
     }
   }
   fileContent += CSSRuleStrings;
