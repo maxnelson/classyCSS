@@ -470,7 +470,6 @@ const tokenize = (value) => {
 export const parsePropDefValue = (value) => {
   value = value.trim();
   const tokens = tokenize(value);
-  console.log(tokens);
   let parts = tokens.filter((x) => x).map(parseTerminals);
 
   // Applying multipliers on terminals

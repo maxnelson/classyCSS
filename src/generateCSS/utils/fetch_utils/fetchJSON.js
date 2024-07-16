@@ -8,6 +8,16 @@ export async function fetchJSON() {
   readdirSync(distDirectory).forEach((file) => {
     rmSync(distDirectory + "/" + file);
   });
+  const CSSFile = path.join(
+    global.__basedir,
+    "src",
+    "cachedCSS",
+    "css",
+    "CSS.json"
+  );
+  const responseDataCSSFile = await fetchJSONFromFile(CSSFile);
+  parseJSONFileResponseData(responseDataCSSFile);
+
   const CSSAlignFile = path.join(
     global.__basedir,
     "src",
