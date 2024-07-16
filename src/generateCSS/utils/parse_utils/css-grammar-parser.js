@@ -467,7 +467,7 @@ const tokenize = (value) => {
   return tokens;
 };
 
-const parsePropDefValue = (value) => {
+export const parsePropDefValue = (value) => {
   value = value.trim();
   const tokens = tokenize(value);
   console.log(tokens);
@@ -546,5 +546,3 @@ const parsePropDefValue = (value) => {
   const res = componentizeByCombinators(parts);
   return res.length === 1 ? res[0] : res;
 };
-
-module.exports.parsePropDefValue = parsePropDefValue;
