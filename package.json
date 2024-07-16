@@ -1,14 +1,18 @@
 {
   "name": "@modularmoon/classycss",
-  "version": "1.0.4",
+  "version": "1.0.19",
   "description": "An unopinionanted CSS library",
-  "main": "classycss-plugin.js",
+  "main": "src/classycss-plugin.js",
   "type": "module",
+  "imports": {
+    "#root/*.js": "./*.js"
+  },
   "peerDependencies": {
     "vite": "^5.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +26,11 @@
   "bugs": {
     "url": "https://github.com/maxnelson/classyCSS/issues"
   },
-  "homepage": "https://github.com/maxnelson/classyCSS#readme"
+  "homepage": "https://github.com/maxnelson/classyCSS#readme",
+  "dependencies": {
+    "@fullhuman/postcss-purgecss": "^6.0.0"
+  },
+  "devDependencies": {
+    "axios": "^1.7.2"
+  }
 }
