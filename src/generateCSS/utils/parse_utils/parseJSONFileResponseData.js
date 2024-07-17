@@ -4,7 +4,10 @@ import {
   createCSSRuleFromCustomPrimitiveValue,
 } from "#root/src/generateCSS/utils/generate_utils/createCSSRuleFromPropertyValue.js";
 import { createFileAndAppendCSSRules } from "#root/src/generateCSS/utils/generate_utils/createFileAndAppendCSSRules.js";
-import { lookupValueInValuesArray } from "#root/src/generateCSS/utils/parse_utils/lookupValueInValuesArray.js";
+import {
+  lookupValueInValuesArray,
+  lookupPropertyInPropertiesArray,
+} from "#root/src/generateCSS/utils/parse_utils/lookupValueInValuesArray.js";
 import { customPrimitiveValuesArray } from "#root/src/generateCSS/utils/generate_utils/customPrimitiveValues.js";
 
 export function parseJSONFileResponseData(responseData) {
@@ -14,16 +17,16 @@ export function parseJSONFileResponseData(responseData) {
     let fileContent = "";
     const propertyName = propertiesArray[index].name;
     const propertyValueJoinedString = propertiesArray[index].value;
-    if (
-      propertyValueJoinedString !== undefined &&
-      propertyName !== "font-weight"
-    ) {
+    if (propertyValueJoinedString !== undefined && propertyName === "gap") {
       let parsedValueObject = parsePropDefValue(propertyValueJoinedString);
+      console.log(propertyName);
+      console.log(parsedValueObject);
       if (parsedValueObject) {
         fileContent += handleParsedValueObject(
           propertyName,
           parsedValueObject,
           valuesArray,
+          propertiesArray,
           fileContent
         );
       }
@@ -36,12 +39,19 @@ const handleParsedValueObject = (
   propertyName,
   parsedValueObject,
   valuesArray,
+  propertiesArray,
   fileContent
 ) => {
-  console.log(propertyName);
   let CSSRuleStrings = "";
   if (parsedValueObject?.type === "array") {
     console.log("placeholder for function to handle array type value");
+    CSSRuleStrings += handleArrayValueType(
+      propertyName,
+      parsedValueObject.items,
+      valuesArray,
+      propertiesArray,
+      fileContent
+    );
   } else {
     for (let combinatorType in parsedValueObject) {
       if (combinatorType === "oneOf") {
@@ -78,6 +88,7 @@ const handleOneOfTypeValue = (
         propertyName,
         oneOfOptionValue.name,
         valuesArray,
+        propertiesArray,
         fileContent
       );
     }
@@ -92,6 +103,7 @@ const handleOneOfTypeValue = (
         propertyName,
         oneOfOptionValue.items,
         valuesArray,
+        propertiesArray,
         fileContent
       );
     }
@@ -104,46 +116,122 @@ const handleArrayValueType = (
   propertyName,
   propertyValueArray,
   valuesArray,
+  propertiesArray,
   fileContent
 ) => {
   let CSSRuleStrings = "";
   let classNameRunningValue = [];
   if (Array.isArray(propertyValueArray)) {
-    for (let arrayObjectItem of propertyValueArray) {
+    for (let [index, arrayObjectItem] of propertyValueArray.entries()) {
+      classNameRunningValue.push([]);
+      if (arrayObjectItem.type === "keyword") {
+        classNameRunningValue.push(arrayObjectItem.name);
+      }
+      if (arrayObjectItem.type === "propertyref") {
+        const propertyRefValueParsed = handlePropertyRefValue(
+          propertyName,
+          arrayObjectItem.name,
+          valuesArray,
+          propertiesArray,
+          fileContent
+        );
+
+        for (let combinatorType in propertyRefValueParsed) {
+          if (combinatorType === "oneOf") {
+            let oneOfArray = propertyRefValueParsed[combinatorType];
+            for (let oneOfItem of oneOfArray) {
+              //console.log(oneOfItem);
+
+              if (oneOfItem.type === "keyword") {
+                classNameRunningValue[index].push(oneOfItem.name);
+              }
+              if (oneOfItem.type === "primitive") {
+                //console.log("primitive type here!");
+                let oneOfItemNameFormatted = oneOfItem.name.replace(/-/g, "_");
+                let primitiveLookup =
+                  customPrimitiveValuesArray[oneOfItemNameFormatted];
+                for (let primitiveValue in primitiveLookup) {
+                  classNameRunningValue[index].push(
+                    primitiveLookup[primitiveValue]
+                  );
+                }
+              }
+            }
+          }
+        }
+        console.log(classNameRunningValue);
+      }
       if (arrayObjectItem.type === "valuespace") {
         CSSRuleStrings += handleValuespaceValue(
           propertyName,
           arrayObjectItem.name,
           valuesArray,
+          propertiesArray,
           fileContent
         );
       }
     }
+    if (classNameRunningValue.length > 0) {
+      let classNameRunningValueFormatted = classNameRunningValue.join(" ");
+      CSSRuleStrings += createCSSRuleFromPropertyValue(
+        propertyName,
+        classNameRunningValueFormatted
+      );
+    }
   } else {
+    console.log("see if this fires");
     if (propertyValueArray.items?.length > 0) {
       for (let arrayObjectItem of propertyValueArray.items) {
-        console.log(arrayObjectItem);
         if (arrayObjectItem.type === "valuespace") {
           CSSRuleStrings += handleValuespaceValue(
             propertyName,
             arrayObjectItem.name,
             valuesArray,
+            propertiesArray,
             fileContent
           );
         }
       }
     } else {
       console.log("no longer an array, needs parsing");
+      console.log(propertyValueArray);
+      if (propertyValueArray.type === "valuespace") {
+        CSSRuleStrings += handleValuespaceValue(
+          propertyName,
+          propertyValueArray.name,
+          valuesArray,
+          propertiesArray,
+          fileContent
+        );
+      }
     }
   }
   fileContent += CSSRuleStrings;
   return fileContent;
 };
 
+const handlePropertyRefValue = (
+  propertyName,
+  propertyRefValue,
+  valuesArray,
+  propertiesArray,
+  fileContent
+) => {
+  console.log("propertyRefValue");
+  console.log(propertyRefValue);
+  const propertyRefValueResolved = lookupPropertyInPropertiesArray(
+    propertyRefValue,
+    propertiesArray
+  );
+  const propertyRefValueParsed = parsePropDefValue(propertyRefValueResolved);
+  return propertyRefValueParsed;
+};
+
 const handleValuespaceValue = (
   propertyName,
   valueName,
   valuesArray,
+  propertiesArray,
   fileContent
 ) => {
   let CSSRuleStrings = "";
@@ -158,6 +246,7 @@ const handleValuespaceValue = (
       propertyName,
       parsedValueObject,
       valuesArray,
+      propertiesArray,
       fileContent
     );
     fileContent += CSSRuleStrings;

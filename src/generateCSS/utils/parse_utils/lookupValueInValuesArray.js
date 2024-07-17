@@ -13,3 +13,13 @@ export function lookupValueInValuesArray(propertyValue, valuesArray) {
     return returnValue;
   }
 }
+
+export const lookupPropertyInPropertiesArray = (
+  propertyRef,
+  propertiesArray
+) => {
+  const propertyObject = propertiesArray.find(
+    (obj) => obj.name === propertyRef
+  );
+  return propertyObject.value;
+};
