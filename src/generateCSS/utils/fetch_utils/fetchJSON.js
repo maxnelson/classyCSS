@@ -27,4 +27,15 @@ export async function fetchJSON() {
   );
   const responseDataCSSAlignFile = await fetchJSONFromFile(CSSAlignFile);
   parseJSONFileResponseData(responseDataCSSAlignFile);
+
+  const CSSBackgroundsFile = path.join(
+    global.__basedir,
+    "src",
+    "cachedCSS",
+    "css",
+    "css-backgrounds.json"
+  );
+  const responseDataCSSBackgroundsFile =
+    await fetchJSONFromFile(CSSBackgroundsFile);
+  //parseJSONFileResponseData(responseDataCSSBackgroundsFile);
 }

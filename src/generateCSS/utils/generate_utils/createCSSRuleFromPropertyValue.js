@@ -1,8 +1,7 @@
 export function createCSSRuleFromPropertyValue(propertyName, propertyValue) {
-  const propertyValueFormatted =
-    propertyValue.indexOf(" ") == -1
-      ? propertyValue
-      : propertyValue.replace(" ", "-");
+  const propertyValueFormatted = propertyValue
+    .replaceAll(" ", "-")
+    .replaceAll("%", "-percent");
   const className = "." + propertyName + "-" + propertyValueFormatted;
   const classRule =
     className + " {\n  " + propertyName + ": " + propertyValue + ";\n}\n";
