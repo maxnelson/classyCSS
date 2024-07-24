@@ -1,6 +1,5 @@
-import { parsePropDefValue } from "#root/src/generateCSS/utils/parse_utils/css-grammar-parser.js";
 import { customPrimitiveValuesArray } from "#root/src/generateCSS/utils/generate_utils/customPrimitiveValues.js";
-
+import { getCombinations } from "#root/src/generateCSS/utils/parse_utils/getCombinations.js";
 export const handleArrayValueType = (
   propertyName,
   propertyValueArray,
@@ -10,7 +9,7 @@ export const handleArrayValueType = (
 ) => {
   let CSSRuleStrings = "";
   let classNameRunningValue = [];
-  console.log("propertyValueArray");
+  console.log("handleArrayValueType");
   console.log(propertyValueArray);
   if (Array.isArray(propertyValueArray)) {
     for (let [index, arrayObjectItem] of propertyValueArray.entries()) {
@@ -26,18 +25,14 @@ export const handleArrayValueType = (
           propertiesArray,
           fileContent
         );
-
         for (let combinatorType in propertyRefValueParsed) {
           if (combinatorType === "oneOf") {
             let oneOfArray = propertyRefValueParsed[combinatorType];
             for (let oneOfItem of oneOfArray) {
-              //console.log(oneOfItem);
-
               if (oneOfItem.type === "keyword") {
                 classNameRunningValue[index].push(oneOfItem.name);
               }
               if (oneOfItem.type === "primitive") {
-                //console.log("primitive type here!");
                 let oneOfItemNameFormatted = oneOfItem.name.replace(/-/g, "_");
                 let primitiveLookup =
                   customPrimitiveValuesArray[oneOfItemNameFormatted];
@@ -50,7 +45,6 @@ export const handleArrayValueType = (
             }
           }
         }
-        //console.log(classNameRunningValue);
       }
       if (arrayObjectItem.type === "valuespace") {
         CSSRuleStrings += handleValuespaceValue(
@@ -62,39 +56,12 @@ export const handleArrayValueType = (
         );
       }
     }
-
-    const combinations = getCombinations(classNameRunningValue);
-    combinations.forEach((combination) => {
-      CSSRuleStrings += createCSSRuleFromPropertyValue(
-        propertyName,
-        combination.join(" ")
-      );
-    });
-    /*
-    if (classNameRunningValue.length > 0) {
-      for (let i = 0; i < classNameRunningValue.length; i++) {
-        console.log(classNameRunningValue[i]);
-        let 
-        for (let j = 0; j < classNameRunningValue[i].length; j++) {
-          console.log(classNameRunningValue[i][j]);
-        }
-      }
-      
-      let classNameRunningValueFormatted = classNameRunningValue.join(" ");
-      CSSRuleStrings += createCSSRuleFromPropertyValue(
-        propertyName,
-        classNameRunningValueFormatted
-      );
-      
-    }
-      */
   } else {
-    console.log("see if this fires");
-
     if (propertyValueArray.items?.length > 0) {
-      for (let arrayObjectItem of propertyValueArray.items) {
-        //check for oneOf type
+      for (let [index, arrayObjectItem] of propertyValueArray.items.entries()) {
+        console.log("arrayObjectItem");
         console.log(arrayObjectItem);
+        classNameRunningValue.push([]);
         if (arrayObjectItem.type === "valuespace") {
           CSSRuleStrings += handleValuespaceValue(
             propertyName,
@@ -103,14 +70,39 @@ export const handleArrayValueType = (
             propertiesArray,
             fileContent
           );
+        }
+        if (arrayObjectItem.type === "array") {
+          for (let arrayItem in arrayObjectItem.items) {
+            classNameRunningValue.push([]);
+            console.log(arrayItem);
+          }
+          console.log("A DISTINCT MESSAGE");
+          console.log(arrayObjectItem.items);
         } else {
           for (let combinatorType in arrayObjectItem) {
             if (combinatorType === "oneOf") {
-              console.log(arrayObjectItem[combinatorType]);
+              let oneOfArray = arrayObjectItem[combinatorType];
+              for (let oneOfItem of oneOfArray) {
+                if (oneOfItem.type === "keyword") {
+                  classNameRunningValue[index].push(oneOfItem.name);
+                }
+                if (oneOfItem.type === "primitive") {
+                  let oneOfItemNameFormatted = oneOfItem.name.replace(
+                    /-/g,
+                    "_"
+                  );
+                  let primitiveLookup =
+                    customPrimitiveValuesArray[oneOfItemNameFormatted];
+                  for (let primitiveValue in primitiveLookup) {
+                    classNameRunningValue[index].push(
+                      primitiveLookup[primitiveValue]
+                    );
+                  }
+                }
+              }
             }
           }
         }
-        //if (arrayObjectItem) {}
       }
     } else {
       console.log("no longer an array, needs parsing");
@@ -126,6 +118,14 @@ export const handleArrayValueType = (
       }
     }
   }
+  console.log(classNameRunningValue);
+  const combinations = getCombinations(classNameRunningValue);
+  combinations.forEach((combination) => {
+    CSSRuleStrings += createCSSRuleFromPropertyValue(
+      propertyName,
+      combination.join(" ")
+    );
+  });
   fileContent += CSSRuleStrings;
   return fileContent;
 };

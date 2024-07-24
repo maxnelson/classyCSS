@@ -1,5 +1,5 @@
 import { handleArrayValueType } from "#root/src/generateCSS/utils/parse_utils/handleArrayValueType.js";
-import { handleOneOfTypeValue } from "#root/src/generateCSS/utils/parse_utils/handleOneOfTypeValue.js";
+import { handleOneOfValueType } from "#root/src/generateCSS/utils/parse_utils/handleOneOfValueType.js";
 
 export const handleParsedValueObject = (
   propertyName,
@@ -8,9 +8,10 @@ export const handleParsedValueObject = (
   propertiesArray,
   fileContent
 ) => {
+  console.log("handleParsedValueObject");
+  console.log(parsedValueObject);
   let CSSRuleStrings = "";
   if (parsedValueObject?.type === "array") {
-    console.log("placeholder for function to handle array type value");
     CSSRuleStrings += handleArrayValueType(
       propertyName,
       parsedValueObject.items,
@@ -21,7 +22,7 @@ export const handleParsedValueObject = (
   } else {
     for (let combinatorType in parsedValueObject) {
       if (combinatorType === "oneOf") {
-        CSSRuleStrings += handleOneOfTypeValue(
+        CSSRuleStrings += handleOneOfValueType(
           propertyName,
           parsedValueObject[combinatorType],
           valuesArray,

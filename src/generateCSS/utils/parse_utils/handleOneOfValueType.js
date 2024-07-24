@@ -3,13 +3,16 @@ import { handleValuespaceValue } from "#root/src/generateCSS/utils/parse_utils/h
 import { handlePrimitiveValueType } from "#root/src/generateCSS/utils/parse_utils/handlePrimitiveValueType.js";
 import { handleArrayValueType } from "#root/src/generateCSS/utils/parse_utils/handleArrayValueType.js";
 
-export const handleOneOfTypeValue = (
+export const handleOneOfValueType = (
   propertyName,
   oneOfArray,
   valuesArray,
   propertiesArray,
   fileContent
 ) => {
+  console.log("handleOneOfValueType");
+  console.log(oneOfArray);
+
   let CSSRuleStrings = "";
   for (let oneOfOptionValue of oneOfArray) {
     if (oneOfOptionValue.type === "keyword") {

@@ -5,7 +5,6 @@ export function createCSSRuleFromPropertyValue(propertyName, propertyValue) {
   const className = "." + propertyName + "-" + propertyValueFormatted;
   const classRule =
     className + " {\n  " + propertyName + ": " + propertyValue + ";\n}\n";
-  //console.log(classRule);
   return classRule;
 }
 
@@ -21,6 +20,5 @@ export const createCSSRuleFromCustomPrimitiveValue = (
   const className = "." + propertyName + "-" + propertyValueNameFormatted;
   const classRule =
     className + " {\n  " + propertyName + ": " + propertyValue + ";\n}\n";
-  //console.log(classRule);
   return classRule;
 };
