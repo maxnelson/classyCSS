@@ -8,8 +8,6 @@ export const handleParsedValueObject = (
   propertiesArray,
   fileContent
 ) => {
-  console.log("handleParsedValueObject");
-  console.log(parsedValueObject);
   let CSSRuleStrings = "";
   if (parsedValueObject?.type === "array") {
     CSSRuleStrings += handleArrayValueType(

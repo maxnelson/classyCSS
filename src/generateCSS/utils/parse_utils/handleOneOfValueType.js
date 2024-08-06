@@ -10,9 +10,6 @@ export const handleOneOfValueType = (
   propertiesArray,
   fileContent
 ) => {
-  console.log("handleOneOfValueType");
-  console.log(oneOfArray);
-
   let CSSRuleStrings = "";
   for (let oneOfOptionValue of oneOfArray) {
     if (oneOfOptionValue.type === "keyword") {

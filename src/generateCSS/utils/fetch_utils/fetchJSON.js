@@ -26,7 +26,7 @@ export async function fetchJSON() {
     "css-align.json"
   );
   const responseDataCSSAlignFile = await fetchJSONFromFile(CSSAlignFile);
-  parseJSONFileResponseData(responseDataCSSAlignFile);
+  //parseJSONFileResponseData(responseDataCSSAlignFile);
 
   const CSSBackgroundsFile = path.join(
     global.__basedir,

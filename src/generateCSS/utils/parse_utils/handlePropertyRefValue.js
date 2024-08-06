@@ -8,8 +8,6 @@ export const handlePropertyRefValue = (
   propertiesArray,
   fileContent
 ) => {
-  console.log("propertyRefValue");
-  console.log(propertyRefValue);
   const propertyRefValueResolved = lookupPropertyInPropertiesArray(
     propertyRefValue,
     propertiesArray

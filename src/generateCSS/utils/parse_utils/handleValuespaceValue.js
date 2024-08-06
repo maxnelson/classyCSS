@@ -25,5 +25,7 @@ export const handleValuespaceValue = (
     );
     fileContent += CSSRuleStrings;
     return fileContent;
+  } else {
+    return "";
   }
 };
