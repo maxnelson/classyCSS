@@ -4,6 +4,8 @@ import { handleValuespaceValue } from "#root/src/generateCSS/utils/parse_utils/h
 import { createCSSRuleFromPropertyValue } from "#root/src/generateCSS/utils/generate_utils/createCSSRuleFromPropertyValue.js";
 import { handlePropertyRefValue } from "#root/src/generateCSS/utils/parse_utils/handlePropertyRefValue.js";
 import { handleOneOfValueType } from "#root/src/generateCSS/utils/parse_utils/handleOneOfValueType.js";
+import { lookupValueInValuesArray } from "#root/src/generateCSS/utils/parse_utils/lookupValueInValuesArray.js";
+import { parsePropDefValue } from "#root/src/generateCSS/utils/parse_utils/css-grammar-parser.js";
 
 export const handleArrayValueType = (
   propertyName,
@@ -16,6 +18,19 @@ export const handleArrayValueType = (
   let classNameRunningValue = [];
   var oneOfArray;
   console.log("propertyValueArray");
+  console.log(propertyValueArray);
+
+  if (propertyValueArray.type === "valuespace") {
+    console.log("propertyValueArray.name");
+    console.log(propertyValueArray.name);
+    //console.log(valuesArray);
+    const valuespaceObject = lookupValueInValuesArray(
+      propertyValueArray.name,
+      valuesArray
+    );
+    let parsedValueObject = parsePropDefValue(valuespaceObject);
+    console.log(parsedValueObject);
+  }
   if (propertyValueArray.items?.length > 0) {
     for (let [index, arrayObjectItem] of propertyValueArray.items.entries()) {
       classNameRunningValue.push([]);

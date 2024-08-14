@@ -5,12 +5,19 @@ export function lookupValueInValuesArray(propertyValue, valuesArray) {
   const valueObject = valuesArray.find(
     (obj) => obj.name === "<" + propertyValue + ">"
   );
+  console.log("valueObject");
+  console.log(valueObject);
   if (valueObject) {
     let returnValue = [];
-    for (let propertyValueObject in valueObject.values) {
-      returnValue.push(valueObject.values[propertyValueObject].name);
+    if (valueObject.values?.length > 0) {
+      for (let propertyValueObject in valueObject.values) {
+        returnValue.push(valueObject.values[propertyValueObject].name);
+        return returnValue;
+      }
+    } else {
+      returnValue.push(valueObject.value);
+      return returnValue[0];
     }
-    return returnValue;
   }
 }
 

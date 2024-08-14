@@ -1,30 +1,29 @@
-# React + TypeScript + Vite
+#classyCSS - An Unopinonated CSS Library / Framework
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![GitHub repo size](https://img.shields.io/github/repo-size/maxnelson/classyCSS)
+[![HitCount](https://hits.dwyl.com/maxnelson/classyCSS.svg?style=flat)](http://hits.dwyl.com/maxnelson/classyCSS)
 
-Currently, two official plugins are available:
+##Summary
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+classyCSS is a CSS library that contains CSS rules for every possible CSS propery / value\*.
 
-## Expanding the ESLint configuration
+The properties / values are gathered from the CSS specification documents found here:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+https://github.com/w3c/webref/blob/main/ed/css/CSS.json
 
-- Configure the top-level `parserOptions` property like this:
+And are parsed / configured into the following format:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
-```
+.display-block { display: block; }
+.margin-top-2rem { margin-top: 2rem; }
+.border-top-color-blue-100 { border-top-color: var(blue-100)}
+etc.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+All property / values are simply expressed in lowercase letter words with hyphens between them. The idea is to minimize the layer of abstraction between the CSS property values themselves, and the class names that implement them. So if you know the names of the CSS property and value you would like to add, simply add a className with hyphens between each word, as well as the property and value, and viola, you're done.
+
+#Installation
+
+install using npm
+
+#Configuration
+
+\*\*Ok, so not quite every property, variable value types such as lengths, integers and colors are input manually.

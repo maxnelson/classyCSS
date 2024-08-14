@@ -11,7 +11,7 @@ export function parseJSONFileResponseData(responseData) {
     const propertyValueJoinedString = propertiesArray[index].value;
     if (
       propertyValueJoinedString !== undefined &&
-      propertyName !== "font-weight"
+      propertyName === "background-position"
     ) {
       let parsedValueObject = parsePropDefValue(propertyValueJoinedString);
       console.log(propertyName);
