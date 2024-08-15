@@ -1,17 +1,27 @@
-# classyCSS - An Unopinonated CSS Library / Framework
+# classyCSS
+
+An Unopinonated CSS Library / Framework
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/maxnelson/classyCSS)
 [![HitCount](https://hits.dwyl.com/maxnelson/classyCSS.svg?style=flat)](http://hits.dwyl.com/maxnelson/classyCSS)
 
 ## Summary
 
-classyCSS is a CSS library that contains CSS rules for every possible CSS propery / value\*.
+classyCSS is a CSS library that contains class-names in a standardized format conforming to the actual CSS property-values which they implement. It aims to be as unopinionated as possible and to minimize the layer of abstraction between CSS property-values and the class-names that implement them.
 
-The properties / values are gathered from the CSS specification documents found here:
+Here is an example CSS Rule contained within the library:
 
-https://github.com/w3c/webref/blob/main/ed/css/CSS.json
+```css
+.display-block {
+  display: block;
+}
+```
 
-And are parsed / configured into the following format:
+All property-values are simply expressed as class-names by formatting them in lowercase letter words with hyphens between them.
+
+So if you know the name of the CSS property and value you would like to add, simply add a class-name to your element with the property name and value separated by hyphens, and that had oughtta do the thing you want.
+
+Some more examples:
 
 ```css
 .display-block { display: block; }
@@ -20,13 +30,19 @@ And are parsed / configured into the following format:
 etc.
 ```
 
-All property-values are simply expressed in lowercase letter words with hyphens between them.
+## Details
 
-The idea is to minimize the layer of abstraction between the CSS property values themselves, and the class names used to implement them.
+The properties / values are gathered from the CSS specification documents found here:
 
-So if you know the names of the CSS property and value you would like to add, simply add a className with hyphens between each word, as well as the property and value, and viola, you're done.
+https://github.com/w3c/webref/blob/main/ed/css/CSS.json
 
-## Installation
+The CSS Definition Syntax of each property is parsed and then transposed into the format described above.
+
+## Setup
+
+Follow the steps below to install and configure classyCSS into your project.
+
+### Installation
 
 install using npm
 
@@ -34,6 +50,23 @@ install using npm
 npm install @modularmoon/classycss
 ```
 
-## Configuration
+### Configuration
 
-\*\*Ok, so not quite every property, variable value types such as lengths, integers and colors are input manually.
+Update the config object of your `vite.config` file to include the following plugin function.
+
+```js
+export default defineConfig({
+plugins: [
+    classyCSSPlugin({
+        contentPaths: ["src/**/*.{js,jsx,ts,tsx,vue}"],
+        outputFilePath: "path/to/your/CSS/folder/some_filename.css",
+        safelist: ["always-include-this-class"],
+    }),
+],
+```
+
+Now you can link to this local CSS file.
+
+### Optional Additional Configuration
+
+You can optionally define your own variable values, such as lengths and colors, by creating a file titled 'variableValues.json' and creating objects for each variable value you want to customly define. For reference, see the default 'variableValues.json' file that comes in the npm directory.
