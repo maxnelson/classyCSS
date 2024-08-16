@@ -6,6 +6,7 @@ import { handlePropertyRefValue } from "#root/src/generateCSS/utils/parse_utils/
 import { handleOneOfValueType } from "#root/src/generateCSS/utils/parse_utils/handleOneOfValueType.js";
 import { lookupValueInValuesArray } from "#root/src/generateCSS/utils/parse_utils/lookupValueInValuesArray.js";
 import { parsePropDefValue } from "#root/src/generateCSS/utils/parse_utils/css-grammar-parser.js";
+import { handleParsedValueObject } from "#root/src/generateCSS/utils/parse_utils/handleParsedValueObject.js";
 
 export const handleArrayValueType = (
   propertyName,
@@ -18,18 +19,22 @@ export const handleArrayValueType = (
   let classNameRunningValue = [];
   var oneOfArray;
   console.log("propertyValueArray");
-  console.log(propertyValueArray);
-
+  //console.log(propertyValueArray);
   if (propertyValueArray.type === "valuespace") {
-    console.log("propertyValueArray.name");
-    console.log(propertyValueArray.name);
-    //console.log(valuesArray);
     const valuespaceObject = lookupValueInValuesArray(
       propertyValueArray.name,
       valuesArray
     );
     let parsedValueObject = parsePropDefValue(valuespaceObject);
-    console.log(parsedValueObject);
+    let somethingElse = handleParsedValueObject(
+      propertyName,
+      parsedValueObject,
+      valuesArray,
+      propertiesArray,
+      fileContent
+    );
+    console.log("somethingElse");
+    console.log(somethingElse);
   }
   if (propertyValueArray.items?.length > 0) {
     for (let [index, arrayObjectItem] of propertyValueArray.items.entries()) {
@@ -39,18 +44,14 @@ export const handleArrayValueType = (
       } else {
         oneOfArray = arrayObjectItem["oneOf"];
       }
-      console.log("oneOfArray");
-      console.log(oneOfArray);
 
       for (let oneOfOptionValue of oneOfArray) {
         if (oneOfOptionValue.type === "keyword") {
           classNameRunningValue[index].push(oneOfOptionValue.name);
         }
         if (oneOfOptionValue.type === "valuespace") {
-          //console.log(oneOfOptionValue);
         }
         if (oneOfOptionValue.type === "primitive") {
-          //console.log(oneOfOptionValue);
           let oneOfItemNameFormatted = oneOfOptionValue.name.replace(/-/g, "_");
           let primitiveLookup =
             customPrimitiveValuesArray[oneOfItemNameFormatted];
@@ -59,7 +60,6 @@ export const handleArrayValueType = (
           }
         }
         if (oneOfOptionValue.type === "array") {
-          //console.log(oneOfOptionValue);
         }
       }
     }
@@ -69,13 +69,9 @@ export const handleArrayValueType = (
   if (propertyValueArray.items?.length > 0) {
     for (let [index, arrayObjectItem] of propertyValueArray.items.entries()) {
       classNameRunningValue.push([]);
-      //console.log("arrayObjectItem");
-      //console.log(arrayObjectItem);
       if (arrayObjectItem.type === "array") {
-        console.log(arrayObjectItem.items);
         for (let combinatorType in arrayObjectItem.items) {
           if (combinatorType === "oneOf") {
-            console.log(arrayObjectItem.items[combinatorType]);
             
           }
         }
@@ -88,10 +84,8 @@ export const handleArrayValueType = (
                 classNameRunningValue[index].push(oneOfOptionValue.name);
               }
               if (oneOfOptionValue.type === "valuespace") {
-                //console.log(oneOfOptionValue);
               }
               if (oneOfOptionValue.type === "primitive") {
-                //console.log(oneOfOptionValue);
                 let oneOfItemNameFormatted = oneOfOptionValue.name.replace(
                   /-/g,
                   "_"
@@ -105,7 +99,6 @@ export const handleArrayValueType = (
                 }
               }
               if (oneOfOptionValue.type === "array") {
-                //console.log(oneOfOptionValue);
               }
             }
             
@@ -127,8 +120,6 @@ export const handleArrayValueType = (
 
   //Go into the first item in the array, accumulate all its values into the classNameRunningValues
   //Do the same for each item in the array
-  console.log("classNameRunningValue");
-  console.log(classNameRunningValue);
   const combinations = getCombinations(classNameRunningValue);
   combinations.forEach((combination) => {
     CSSRuleStrings += createCSSRuleFromPropertyValue(
@@ -148,12 +139,9 @@ export const handleArrayValueType2 = (
   propertiesArray,
   fileContent
 ) => {
-  console.log("handleArrayValueType");
-  console.log(propertyValueArray);
   let CSSRuleStrings = "";
   let classNameRunningValue = [];
   if (Array.isArray(propertyValueArray)) {
-    console.log("one of the options is an array");
     for (let [index, arrayObjectItem] of propertyValueArray.entries()) {
       classNameRunningValue.push([]);
       if (arrayObjectItem.type === "keyword") {
@@ -201,8 +189,6 @@ export const handleArrayValueType2 = (
   } else {
     if (propertyValueArray.items?.length > 0) {
       for (let [index, arrayObjectItem] of propertyValueArray.items.entries()) {
-        console.log("propertyValueArray");
-        console.log(propertyValueArray);
         classNameRunningValue.push([]);
         if (arrayObjectItem.type === "valuespace") {
           CSSRuleStrings += handleValuespaceValue(

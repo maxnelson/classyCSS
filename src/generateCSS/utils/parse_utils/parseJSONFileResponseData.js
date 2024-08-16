@@ -8,14 +8,16 @@ export function parseJSONFileResponseData(responseData) {
   for (let index = 0; index < propertiesArray.length; index++) {
     let fileContent = "";
     const propertyName = propertiesArray[index].name;
+
     const propertyValueJoinedString = propertiesArray[index].value;
     if (
       propertyValueJoinedString !== undefined &&
-      propertyName === "background-position"
+      //propertyName !== "font-weight" &&
+      propertyName === "margin" &&
+      propertyName !== "font-weight"
     ) {
       let parsedValueObject = parsePropDefValue(propertyValueJoinedString);
       console.log(propertyName);
-      console.log(propertyValueJoinedString);
       console.log(parsedValueObject);
       if (parsedValueObject) {
         fileContent += handleParsedValueObject(
