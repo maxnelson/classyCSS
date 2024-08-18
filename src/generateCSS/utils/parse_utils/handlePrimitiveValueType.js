@@ -15,3 +15,13 @@ export const handlePrimitiveValueType = (propertyName, valueName) => {
   }
   return CSSRuleStrings;
 };
+
+export const handlePrimitiveValueType2 = (propertyName, valueName) => {
+  let arrayOfValues = [];
+  const valueNameFormatted = valueName.replace(/-/g, "_");
+  const primitiveLookup = customPrimitiveValuesArray[valueNameFormatted];
+  for (let primitiveValue in primitiveLookup) {
+    arrayOfValues.push(primitiveLookup[primitiveValue]);
+  }
+  return arrayOfValues;
+};

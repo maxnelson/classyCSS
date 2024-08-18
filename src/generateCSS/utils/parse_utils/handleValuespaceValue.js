@@ -1,6 +1,6 @@
 import { parsePropDefValue } from "#root/src/generateCSS/utils/parse_utils/css-grammar-parser.js";
 import { lookupValueInValuesArray } from "#root/src/generateCSS/utils/parse_utils/lookupValueInValuesArray.js";
-import { handleParsedValueObject } from "#root/src/generateCSS/utils/parse_utils/handleParsedValueObject.js";
+import { handleParsedDefinitionSyntax } from "#root/src/generateCSS/utils/parse_utils/handleParsedDefinitionSyntax.js";
 export const handleValuespaceValue = (
   propertyName,
   valueName,
@@ -16,7 +16,7 @@ export const handleValuespaceValue = (
   if (valuespaceValueObject?.length > 0) {
     let formattedList = valuespaceValueObject.join(" | ");
     let parsedValueObject = parsePropDefValue(formattedList);
-    CSSRuleStrings += handleParsedValueObject(
+    CSSRuleStrings += handleParsedDefinitionSyntax(
       propertyName,
       parsedValueObject,
       valuesArray,

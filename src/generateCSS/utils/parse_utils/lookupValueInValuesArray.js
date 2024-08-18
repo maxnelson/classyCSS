@@ -7,14 +7,10 @@ export function lookupValueInValuesArray(propertyValue, valuesArray) {
   );
   if (valueObject) {
     let returnValue;
-    console.log("valueObject");
-    console.log(valueObject);
     if (valueObject.name === "<margin-width>") {
-      //valueObject = { values: ["<length>", "<percentage>"] };
       valueObject = {
         values: [{ name: "<length>" }, { name: "<percentage>" }],
       };
-      console.log("this is a margin width");
     }
     if (valueObject.values?.length > 0) {
       let returnArray = [];
@@ -25,8 +21,6 @@ export function lookupValueInValuesArray(propertyValue, valuesArray) {
     } else {
       returnValue = valueObject.value;
     }
-    console.log("lookupValueInValuesArray returnObject");
-    console.log(returnValue);
     return returnValue;
   }
 }

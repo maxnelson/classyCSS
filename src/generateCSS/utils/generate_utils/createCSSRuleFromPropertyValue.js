@@ -1,3 +1,18 @@
+export function createCSSRuleFromPropertyValues(
+  propertyName,
+  propertyValuesArray
+) {
+  let CSSRuleStrings = "";
+  for (let propertyValue in propertyValuesArray) {
+    let CSSRuleString = createCSSRuleFromPropertyValue(
+      propertyName,
+      propertyValue
+    );
+    CSSRuleStrings += CSSRuleString;
+  }
+  return CSSRuleStrings;
+}
+
 export function createCSSRuleFromPropertyValue(propertyName, propertyValue) {
   const propertyValueFormatted = propertyValue
     .replaceAll(" ", "-")
