@@ -13,7 +13,7 @@ export const handleArrayTypeValue = (
   propertyValueArrayObject,
   JSONValuesArray,
   propertiesArray,
-  fileContent
+  arrayOfFinalValues
 ) => {
   let propertyValueArrayItems = propertyValueArrayObject.items;
   let CSSRuleStrings = "";
@@ -29,8 +29,7 @@ export const handleArrayTypeValue = (
       propertyName,
       parsedDefinitionSyntax,
       JSONValuesArray,
-      propertiesArray,
-      fileContent
+      propertiesArray
     );
     let parsedDefinitionSyntaxValuesFormatted =
       parsedDefinitionSyntaxValues.split(",");
@@ -70,19 +69,8 @@ export const handleArrayTypeValue = (
     }
   }
   const combinations = getCombinations(runningListOfFinalValues);
-  //console.log("COMBINATIONS");
-  //console.log(combinations);
-  /*
-  combinations.forEach((combination) => {
-    CSSRuleStrings += createCSSRuleFromPropertyValue(
-      propertyName,
-      combination.join(" ")
-    );
-  });
-  
-  fileContent += CSSRuleStrings;
-  */
-  //console.log(fileContent);
-  //if (propertyValueArrayObject.maxItems) {}
-  return combinations;
+  console.log("COMBINATIONS");
+  console.log(combinations);
+
+  return arrayOfFinalValues;
 };
