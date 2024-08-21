@@ -1,12 +1,32 @@
-import { parsePropDefValue } from "#root/src/generateCSS/utils/parse_utils/css-grammar-parser.js";
-import { customPrimitiveValuesArray } from "#root/src/generateCSS/utils/generate_utils/customPrimitiveValues.js";
-
 export function lookupValueInValuesArray(propertyValue, valuesArray) {
   let valueObject = valuesArray.find(
     (obj) => obj.name === "<" + propertyValue + ">"
   );
   if (valueObject) {
     let returnValue;
+    if (valueObject.name === "<absolute-size>") {
+      valueObject = {
+        values: [
+          { name: "xx-small" },
+          { name: "x-small" },
+          { name: "small" },
+          { name: "medium" },
+          { name: "large" },
+          { name: "x-large" },
+          { name: "xx-large" },
+        ],
+      };
+    }
+    if (valueObject.name === "<relative-size>") {
+      valueObject = {
+        values: [{ name: "smaller" }, { name: "larger" }],
+      };
+    }
+    if (valueObject.name === "<uri>") {
+      valueObject = {
+        values: [{ name: "inherit" }],
+      };
+    }
     if (valueObject.name === "<margin-width>") {
       valueObject = {
         values: [{ name: "<length>" }, { name: "<percentage>" }],
@@ -21,6 +41,7 @@ export function lookupValueInValuesArray(propertyValue, valuesArray) {
     } else {
       returnValue = valueObject.value;
     }
+
     return returnValue;
   }
 }
