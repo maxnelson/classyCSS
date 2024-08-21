@@ -6,7 +6,7 @@ import { handlePropertyRefValue } from "#root/src/generateCSS/utils/parse_utils/
 import { handleOneOfValueType } from "#root/src/generateCSS/utils/parse_utils/handleOneOfValueType.js";
 import { lookupValueInValuesArray } from "#root/src/generateCSS/utils/parse_utils/lookupValueInValuesArray.js";
 import { parsePropDefValue } from "#root/src/generateCSS/utils/parse_utils/css-grammar-parser.js";
-import { handleParsedDefinitionSyntax } from "#root/src/generateCSS/utils/parse_utils/handleParsedDefinitionSyntax.js";
+import { handleParsedDefinitionSyntax } from "#root/src/generateCSS/utils/parse_utils/newApproach/handleParsedDefinitionSyntax.js";
 
 export const handleArrayTypeValue = (
   propertyName,
@@ -15,62 +15,36 @@ export const handleArrayTypeValue = (
   propertiesArray,
   arrayOfFinalValues
 ) => {
-  let propertyValueArrayItems = propertyValueArrayObject.items;
-  let CSSRuleStrings = "";
-  let runningListOfFinalValues = [];
-  var oneOfArray;
-  if (propertyValueArrayItems.type === "valuespace") {
+  console.log("lets try this out");
+  console.log("propertyValueArrayObject");
+  console.log(propertyValueArrayObject);
+  if (propertyValueArrayObject.items.type === "valuespace") {
     const valuespaceObject = lookupValueInValuesArray(
-      propertyValueArrayItems.name,
+      propertyValueArrayObject.items.name,
       JSONValuesArray
     );
+    console.log(valuespaceObject);
     let parsedDefinitionSyntax = parsePropDefValue(valuespaceObject);
+    console.log(parsedDefinitionSyntax);
+
     let parsedDefinitionSyntaxValues = handleParsedDefinitionSyntax(
       propertyName,
       parsedDefinitionSyntax,
       JSONValuesArray,
-      propertiesArray
+      propertiesArray,
+      arrayOfFinalValues
     );
-    let parsedDefinitionSyntaxValuesFormatted =
-      parsedDefinitionSyntaxValues.split(",");
-    runningListOfFinalValues.push([]);
-    for (let item of parsedDefinitionSyntaxValuesFormatted) {
-      runningListOfFinalValues[0].push(item);
-    }
   }
-  if (propertyValueArrayItems?.length > 0) {
-    for (let [index, arrayObjectItem] of propertyValueArrayItems.entries()) {
-      runningListOfFinalValues.push([]);
-      if (arrayObjectItem.type === "array") {
-        oneOfArray = arrayObjectItem.items["oneOf"];
-      } else {
-        oneOfArray = arrayObjectItem["oneOf"];
-      }
 
-      for (let oneOfOptionValue of oneOfArray) {
-        if (oneOfOptionValue.type === "keyword") {
-          runningListOfFinalValues[index].push(oneOfOptionValue.name);
-        }
-        if (oneOfOptionValue.type === "valuespace") {
-        }
-        if (oneOfOptionValue.type === "primitive") {
-          let oneOfItemNameFormatted = oneOfOptionValue.name.replace(/-/g, "_");
-          let primitiveLookup =
-            customPrimitiveValuesArray[oneOfItemNameFormatted];
-          for (let primitiveValue in primitiveLookup) {
-            runningListOfFinalValues[index].push(
-              primitiveLookup[primitiveValue]
-            );
-          }
-        }
-        if (oneOfOptionValue.type === "array") {
-        }
-      }
-    }
-  }
-  const combinations = getCombinations(runningListOfFinalValues);
-  console.log("COMBINATIONS");
-  console.log(combinations);
-
+  /*
+  arrayOfFinalValues.push(["four"]);
+  arrayOfFinalValues.push(["five"]);
+  arrayOfFinalValues.push(["six seven"]);
+  
+  let someNewVar = getCombinations(arrayOfFinalValues);
+  console.log("someNewVar");
+  console.log(someNewVar);
+  arrayOfFinalValues.push(someNewVar);
+  */
   return arrayOfFinalValues;
 };

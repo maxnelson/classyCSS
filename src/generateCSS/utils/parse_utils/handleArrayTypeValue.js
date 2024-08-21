@@ -69,6 +69,8 @@ export const handleArrayTypeValue = (
       }
     }
   }
+  console.log("RUNNINGLISTOFFINALVALUES");
+  console.log(runningListOfFinalValues);
   const combinations = getCombinations(runningListOfFinalValues);
   //console.log("COMBINATIONS");
   //console.log(combinations);

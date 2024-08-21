@@ -1,10 +1,7 @@
 import { createCSSRuleFromPropertyValue } from "#root/src/generateCSS/utils/generate_utils/createCSSRuleFromPropertyValue.js";
 import { handleValuespaceValue } from "#root/src/generateCSS/utils/parse_utils/handleValuespaceValue.js";
-import {
-  handlePrimitiveValueType,
-  handlePrimitiveValueType2,
-} from "#root/src/generateCSS/utils/parse_utils/handlePrimitiveValueType.js";
 import { handleArrayTypeValue } from "#root/src/generateCSS/utils/parse_utils/newApproach/handleArrayTypeValue.js";
+import { handlePrimitiveTypeValue } from "#root/src/generateCSS/utils/parse_utils/newApproach/handlePrimitiveTypeValue.js";
 
 export const handleOneOfTypeValue = (
   propertyName,
@@ -13,10 +10,10 @@ export const handleOneOfTypeValue = (
   propertiesArray,
   arrayOfFinalValues
 ) => {
-  console.log("oneOfTypeValue");
-  console.log(oneOfTypeValue);
+  //console.log("handleOneOfTypeValue");
+  //console.log(oneOfTypeValue);
   for (let oneOfTypeValueOption of oneOfTypeValue) {
-    console.log("oneOfTypeValueOption");
+    console.log("handleOneOfTypeValueOption");
     console.log(oneOfTypeValueOption);
     if (oneOfTypeValueOption.type === "keyword") {
       arrayOfFinalValues.push([oneOfTypeValueOption.name]);
@@ -31,12 +28,16 @@ export const handleOneOfTypeValue = (
         fileContent
       );
     }
-    if (oneOfOptionValue.type === "primitive") {
-      arrayOfValues.push(
-        handlePrimitiveValueType2(propertyName, oneOfOptionValue.name)
+      */
+    if (oneOfTypeValueOption.type === "primitive") {
+      let arrayOfPrimitiveRefValues = handlePrimitiveTypeValue(
+        propertyName,
+        oneOfTypeValueOption.name
       );
+      for (let primitiveValue of arrayOfPrimitiveRefValues) {
+        arrayOfFinalValues.push(primitiveValue);
+      }
     }
-    */
     if (oneOfTypeValueOption.type === "array") {
       handleArrayTypeValue(
         propertyName,

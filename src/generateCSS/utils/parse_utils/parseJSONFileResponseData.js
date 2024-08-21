@@ -1,7 +1,6 @@
 import { parsePropDefValue } from "#root/src/generateCSS/utils/parse_utils/css-grammar-parser.js";
 import { createFileAndAppendCSSRules } from "#root/src/generateCSS/utils/generate_utils/createFileAndAppendCSSRules.js";
-import { handleParsedDefinitionSyntax } from "#root/src/generateCSS/utils/parse_utils/newApproach/handleParsedDefinitionSyntax.js";
-
+import { generateFileContent } from "#root/src/generateCSS/utils/parse_utils/newApproach/generateFileContent.js";
 export function parseJSONFileResponseData(responseData) {
   const propertiesArray = responseData.properties;
   const valuesArray = responseData.values;
@@ -20,7 +19,7 @@ export function parseJSONFileResponseData(responseData) {
       console.log(propertyName);
       console.log(parsedDefinitionSyntax);
       if (parsedDefinitionSyntax) {
-        var fileContent = handleParsedDefinitionSyntax(
+        var fileContent = generateFileContent(
           propertyName,
           parsedDefinitionSyntax,
           valuesArray,

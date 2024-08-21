@@ -3,7 +3,7 @@
 An Unopinonated CSS Library / Framework
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/maxnelson/classyCSS)
-[![HitCount](https://hits.dwyl.com/maxnelson/classyCSS.svg?style=flat)](http://hits.dwyl.com/maxnelson/classyCSS)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fmaxnelson%2FclassyCSS&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits+daily+%2F+total&edge_flat=false)](https://hits.seeyoufarm.com)
 
 ## Summary
 

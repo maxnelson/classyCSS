@@ -1,6 +1,4 @@
 export function createCSSRuleFromPropertyValue(propertyName, propertyValue) {
-  console.log("propertyValueFinal");
-  console.log(propertyValue);
   const propertyValueFormatted = propertyValue
     .replaceAll(" ", "-")
     .replaceAll("%", "-percent");
