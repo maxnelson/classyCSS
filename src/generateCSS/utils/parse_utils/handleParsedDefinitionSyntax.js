@@ -27,7 +27,6 @@ export const handleParsedDefinitionSyntax = (
   } else {
     for (let i = 0; i < Object.keys(parsedDefinitionSyntax).length; i++) {
       const currentKey = Object.keys(parsedDefinitionSyntax)[i];
-      console.log(currentKey);
       if (currentKey === "oneOf" || currentKey === "allOf") {
         const oneOfArray = parsedDefinitionSyntax[currentKey];
         for (let j = 0; j < oneOfArray.length; j++) {
@@ -112,6 +111,18 @@ export const handleParsedDefinitionSyntax = (
             propertiesArray,
             arrayOfFinalValues
           );
+        }
+        if (parsedDefinitionSyntax.type === "primitive") {
+          console.log("PRIMIITIVEVALUEREF");
+          const valueNameFormatted = parsedDefinitionSyntax.name.replace(
+            /-/g,
+            "_"
+          );
+          const primitiveLookup =
+            customPrimitiveValuesArray[valueNameFormatted];
+          for (let primitiveValue in primitiveLookup) {
+            arrayOfFinalValues.push([primitiveLookup[primitiveValue]]);
+          }
         }
         if (parsedDefinitionSyntax.type === "propertyref") {
           const propertyRefValueResolved = lookupPropertyInPropertiesArray(

@@ -8,7 +8,7 @@ export async function fetchJSON() {
   readdirSync(distDirectory).forEach((file) => {
     rmSync(distDirectory + "/" + file);
   });
-  //await fetchJSONFromFileAndCompileCSS("CSS");
+  await fetchJSONFromFileAndCompileCSS("CSS");
   await fetchJSONFromFileAndCompileCSS("css-align");
   await fetchJSONFromFileAndCompileCSS("css-backgrounds");
   await fetchJSONFromFileAndCompileCSS("css-flexbox");

@@ -1,5 +1,7 @@
 export const customPrimitiveValuesArray = {
   color: {
+    black: "black",
+    white: "white",
     "blue-10": "#39f",
     "blue-15": "#42a5f5",
     "blue-20": "#2196f3",
@@ -22,6 +24,7 @@ export const customPrimitiveValuesArray = {
     "red-10": "#dc3546",
     "green-10": "#28a745",
     "yellow-10": "#ffbf00",
+    "another-gray": "var(--gray-10)",
   },
   length: {
     "1rem": "1rem",
