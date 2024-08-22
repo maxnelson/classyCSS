@@ -1,9 +1,34 @@
 export function lookupValueInValuesArray(propertyValue, valuesArray) {
-  let valueObject = valuesArray.find(
-    (obj) => obj.name === "<" + propertyValue + ">"
-  );
+  const propertyValueFormatted = "<" + propertyValue + ">";
+  let valueObject =
+    valuesArray.find((obj) => obj.name === propertyValueFormatted) ||
+    propertyValueFormatted;
+  let returnValue;
   if (valueObject) {
-    let returnValue;
+    if (valueObject.name === "<visual-box>" || valueObject === "<visual-box>") {
+      valueObject = {
+        values: [
+          { name: "content-box" },
+          { name: "padding-box" },
+          { name: "border-box" },
+        ],
+      };
+    }
+    if (valueObject.name === "<family-name>") {
+      valueObject = {
+        values: [{ name: "Helvetica" }],
+      };
+    }
+    if (valueObject.name === "<generic-family>") {
+      valueObject = {
+        values: [{ name: "sans-serif" }],
+      };
+    }
+    if (valueObject.name === "<identifier>") {
+      valueObject = {
+        values: [{ name: "inherit" }],
+      };
+    }
     if (valueObject.name === "<absolute-size>") {
       valueObject = {
         values: [
@@ -41,7 +66,6 @@ export function lookupValueInValuesArray(propertyValue, valuesArray) {
     } else {
       returnValue = valueObject.value;
     }
-
     return returnValue;
   }
 }

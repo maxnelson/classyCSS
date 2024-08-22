@@ -1,5 +1,3 @@
-//import { handleArrayTypeValue } from "#root/src/generateCSS/utils/parse_utils/handleArrayTypeValue.js";
-//import { handleOneOfValueType } from "#root/src/generateCSS/utils/parse_utils/handleOneOfValueType.js";
 import { createCSSRuleFromPropertyValue } from "#root/src/generateCSS/utils/generate_utils/createCSSRuleFromPropertyValue.js";
 import { handleParsedDefinitionSyntax } from "#root/src/generateCSS/utils/parse_utils/handleParsedDefinitionSyntax.js";
 export const generateFileContent = (
@@ -9,7 +7,6 @@ export const generateFileContent = (
   propertiesArray
 ) => {
   let arrayOfFinalValues = [];
-  //let arrayOfFinalValues = [["one"], ["two"], ["three"]];
   handleParsedDefinitionSyntax(
     propertyName,
     parsedDefinitionSyntax,
@@ -17,9 +14,6 @@ export const generateFileContent = (
     propertiesArray,
     arrayOfFinalValues
   );
-
-  //arrayOfFinalValues.push(anotherListofValues);
-
   let returnValue = "";
   arrayOfFinalValues.forEach((value) => {
     returnValue += createCSSRuleFromPropertyValue(

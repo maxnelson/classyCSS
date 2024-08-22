@@ -8,45 +8,20 @@ export async function fetchJSON() {
   readdirSync(distDirectory).forEach((file) => {
     rmSync(distDirectory + "/" + file);
   });
+  //await fetchJSONFromFileAndCompileCSS("CSS");
+  await fetchJSONFromFileAndCompileCSS("css-align");
+  await fetchJSONFromFileAndCompileCSS("css-backgrounds");
+  await fetchJSONFromFileAndCompileCSS("css-flexbox");
+}
+
+const fetchJSONFromFileAndCompileCSS = async (fileName) => {
   const CSSFile = path.join(
     global.__basedir,
     "src",
     "cachedCSS",
     "css",
-    "CSS.json"
+    fileName + ".json"
   );
   const responseDataCSSFile = await fetchJSONFromFile(CSSFile);
   parseJSONFileResponseData(responseDataCSSFile);
-
-  const CSSAlignFile = path.join(
-    global.__basedir,
-    "src",
-    "cachedCSS",
-    "css",
-    "css-align.json"
-  );
-  const responseDataCSSAlignFile = await fetchJSONFromFile(CSSAlignFile);
-  parseJSONFileResponseData(responseDataCSSAlignFile);
-
-  const CSSBackgroundsFile = path.join(
-    global.__basedir,
-    "src",
-    "cachedCSS",
-    "css",
-    "css-backgrounds.json"
-  );
-  const responseDataCSSBackgroundsFile = await fetchJSONFromFile(
-    CSSBackgroundsFile
-  );
-  parseJSONFileResponseData(responseDataCSSBackgroundsFile);
-
-  const CSSFlexboxFile = path.join(
-    global.__basedir,
-    "src",
-    "cachedCSS",
-    "css",
-    "css-flexbox.json"
-  );
-  const responseDataCSSFlexboxFile = await fetchJSONFromFile(CSSFlexboxFile);
-  parseJSONFileResponseData(responseDataCSSFlexboxFile);
-}
+};

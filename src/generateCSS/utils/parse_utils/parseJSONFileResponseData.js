@@ -13,13 +13,13 @@ export function parseJSONFileResponseData(responseData) {
       propertyName !== "font-weight" &&
       propertyName !== "clip" &&
       propertyName !== "content" &&
-      propertyName !== "font-family"
+      propertyName !== "font-family" &&
+      propertyName === "background-clip"
     ) {
       let parsedDefinitionSyntax = parsePropDefValue(
         propertyValueDefinitionSyntax
       );
       console.log(propertyName);
-      //console.log(parsedDefinitionSyntax);
       if (parsedDefinitionSyntax) {
         var fileContent = generateFileContent(
           propertyName,
@@ -28,17 +28,6 @@ export function parseJSONFileResponseData(responseData) {
           propertiesArray
         );
       }
-      /*
-      if (parsedDefinitionSyntax) {
-        fileContent += handleParsedDefinitionSyntax(
-          propertyName,
-          parsedDefinitionSyntax,
-          valuesArray,
-          propertiesArray,
-          fileContent
-        );
-      }
-      */
       createFileAndAppendCSSRules(propertyName, fileContent);
     }
   }
