@@ -11,7 +11,9 @@ export function parseJSONFileResponseData(responseData) {
     if (
       propertyValueDefinitionSyntax !== undefined &&
       propertyName !== "font-weight" &&
-      propertyName !== "clip"
+      propertyName !== "clip" &&
+      propertyName !== "content" &&
+      propertyName !== "font-family"
     ) {
       let parsedDefinitionSyntax = parsePropDefValue(
         propertyValueDefinitionSyntax

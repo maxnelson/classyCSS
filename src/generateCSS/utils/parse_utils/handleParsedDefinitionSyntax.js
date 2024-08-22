@@ -9,7 +9,6 @@ export const handleParsedDefinitionSyntax = (
   propertiesArray,
   arrayOfFinalValues
 ) => {
-  //console.log(parsedDefinitionSyntax);
   for (let i = 0; i < Object.keys(parsedDefinitionSyntax).length; i++) {
     const currentKey = Object.keys(parsedDefinitionSyntax)[i];
     if (currentKey === "oneOf") {
@@ -36,15 +35,36 @@ export const handleParsedDefinitionSyntax = (
           );
         }
         if (oneOfOption.type === "primitive") {
-          console.log(oneOfOption.name);
           const valueNameFormatted = oneOfOption.name.replace(/-/g, "_");
           const primitiveLookup =
             customPrimitiveValuesArray[valueNameFormatted];
           for (let primitiveValue in primitiveLookup) {
             arrayOfFinalValues.push([primitiveLookup[primitiveValue]]);
           }
-        } else {
         }
+
+        if (oneOfOption.type === "array") {
+          handleParsedDefinitionSyntax(
+            propertyName,
+            oneOfOption.items,
+            valuesArray,
+            propertiesArray,
+            arrayOfFinalValues
+          );
+        }
+      }
+    } else if (currentKey === "items") {
+      const arrayValueType = parsedDefinitionSyntax[currentKey];
+      //console.log(arrayValueType);
+      for (let i = 0; i < arrayValueType.length; i++) {
+        const currentArrayItem = arrayValueType[i];
+        handleParsedDefinitionSyntax(
+          propertyName,
+          currentArrayItem,
+          valuesArray,
+          propertiesArray,
+          arrayOfFinalValues
+        );
       }
     }
   }

@@ -38,5 +38,15 @@ export async function fetchJSON() {
   const responseDataCSSBackgroundsFile = await fetchJSONFromFile(
     CSSBackgroundsFile
   );
-  //parseJSONFileResponseData(responseDataCSSBackgroundsFile);
+  parseJSONFileResponseData(responseDataCSSBackgroundsFile);
+
+  const CSSFlexboxFile = path.join(
+    global.__basedir,
+    "src",
+    "cachedCSS",
+    "css",
+    "css-flexbox.json"
+  );
+  const responseDataCSSFlexboxFile = await fetchJSONFromFile(CSSFlexboxFile);
+  parseJSONFileResponseData(responseDataCSSFlexboxFile);
 }
