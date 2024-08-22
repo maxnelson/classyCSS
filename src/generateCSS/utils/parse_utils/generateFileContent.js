@@ -15,6 +15,9 @@ export const generateFileContent = (
     arrayOfFinalValues
   );
   let returnValue = "";
+  addDefaultValue(arrayOfFinalValues, "initial");
+  addDefaultValue(arrayOfFinalValues, "inherit");
+  addDefaultValue(arrayOfFinalValues, "unset");
   arrayOfFinalValues.forEach((value) => {
     returnValue += createCSSRuleFromPropertyValue(
       propertyName,
@@ -22,4 +25,13 @@ export const generateFileContent = (
     );
   });
   return returnValue;
+};
+
+const addDefaultValue = (arrayOfFinalValues, defaultValue) => {
+  const containsValue = arrayOfFinalValues.some((innerArray) => {
+    innerArray.includes(defaultValue);
+  });
+  if (!containsValue) {
+    arrayOfFinalValues.push([defaultValue]);
+  }
 };

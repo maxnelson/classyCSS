@@ -12,7 +12,6 @@ export const handleParsedDefinitionSyntax = (
   propertiesArray,
   arrayOfFinalValues
 ) => {
-  console.log(parsedDefinitionSyntax);
   if (Array.isArray(parsedDefinitionSyntax)) {
     let compiledArray = [];
     for (let i = 0; i < parsedDefinitionSyntax.length; i++) {
@@ -87,7 +86,6 @@ export const handleParsedDefinitionSyntax = (
         }
       } else if (currentKey === "type") {
         if (parsedDefinitionSyntax.type === "array") {
-          console.log("SEE IF THIS WORKS");
           handleParsedDefinitionSyntax(
             propertyName,
             parsedDefinitionSyntax.items,
@@ -113,7 +111,6 @@ export const handleParsedDefinitionSyntax = (
           );
         }
         if (parsedDefinitionSyntax.type === "primitive") {
-          console.log("PRIMIITIVEVALUEREF");
           const valueNameFormatted = parsedDefinitionSyntax.name.replace(
             /-/g,
             "_"
