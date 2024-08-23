@@ -12,7 +12,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node index.js && sass dist/combined.scss dist/main.css --style=compressed"
+    "build": "node index.js && sass dist/combined.scss dist/main.css",
+    "diff": "node src/tools/diffCSS.js"
   },
   "repository": {
     "type": "git",
