@@ -16,6 +16,14 @@ export function parseJSONFileResponseData(responseData) {
       "display",
       "visibility",
       "cursor",
+      "background-color",
+      "position",
+    ];
+    const CSS3ExclusionList = [
+      "fill",
+      "fill-opacity",
+      "stroke",
+      "stroke-opacity",
     ];
     if (
       propertyValueDefinitionSyntax !== undefined &&
@@ -23,7 +31,10 @@ export function parseJSONFileResponseData(responseData) {
         responseData.spec.title === "CSS 2" &&
         CSS2ExclusionList.includes(propertyName)
       ) &&
-      propertyName === "cursor"
+      !(
+        responseData.spec.title === "CSS Fill and Stroke Module Level 3" &&
+        CSS3ExclusionList.includes(propertyName)
+      )
     ) {
       let parsedDefinitionSyntax = parsePropDefValue(
         propertyValueDefinitionSyntax

@@ -20,4 +20,6 @@ export const customValuespaceValuesArray = {
   "<target-name>": "target-name",
   "<compat-auto>": "compat-auto",
   "<compat-special>": "compat-special",
+  "<bg-size>": "bg-size",
+  "<repeat-style>": "repeat-style",
 };

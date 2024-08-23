@@ -12,7 +12,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node index.js"
+    "build": "node index.js && sass dist/combined.scss dist/main.css --style=compressed"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "@fullhuman/postcss-purgecss": "^6.0.0"
   },
   "devDependencies": {
-    "axios": "^1.7.2"
+    "axios": "^1.7.2",
+    "sass": "^1.77.8"
   }
 }
