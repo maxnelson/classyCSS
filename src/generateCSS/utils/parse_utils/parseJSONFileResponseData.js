@@ -8,12 +8,22 @@ export function parseJSONFileResponseData(responseData) {
   for (let index = 0; index < propertiesArray.length; index++) {
     const propertyName = propertiesArray[index].name;
     const propertyValueDefinitionSyntax = propertiesArray[index].value;
+    const CSS2ExclusionList = [
+      "font-weight",
+      "clip",
+      "content",
+      "font-family",
+      "display",
+      "visibility",
+      "cursor",
+    ];
     if (
       propertyValueDefinitionSyntax !== undefined &&
-      propertyName !== "font-weight" &&
-      propertyName !== "clip" &&
-      propertyName !== "content" &&
-      propertyName !== "font-family"
+      !(
+        responseData.spec.title === "CSS 2" &&
+        CSS2ExclusionList.includes(propertyName)
+      ) &&
+      propertyName === "cursor"
     ) {
       let parsedDefinitionSyntax = parsePropDefValue(
         propertyValueDefinitionSyntax

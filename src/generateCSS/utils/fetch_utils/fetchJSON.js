@@ -12,6 +12,8 @@ export async function fetchJSON() {
   await fetchJSONFromFileAndCompileCSS("css-align");
   await fetchJSONFromFileAndCompileCSS("css-backgrounds");
   await fetchJSONFromFileAndCompileCSS("css-flexbox");
+  await fetchJSONFromFileAndCompileCSS("css-display");
+  await fetchJSONFromFileAndCompileCSS("css-ui");
 }
 
 const fetchJSONFromFileAndCompileCSS = async (fileName) => {

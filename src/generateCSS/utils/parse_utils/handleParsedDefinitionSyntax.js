@@ -12,6 +12,11 @@ export const handleParsedDefinitionSyntax = (
   propertiesArray,
   arrayOfFinalValues
 ) => {
+  console.log("SEE HOW MANY TIMES THIS RUNS");
+  //console.log(parsedDefinitionSyntax);
+  //console.log(Object.keys(parsedDefinitionSyntax));
+  //console.log(Object.entries(parsedDefinitionSyntax));
+  //if (parsedDefinitionSyntax()[0]) {}
   if (Array.isArray(parsedDefinitionSyntax)) {
     let compiledArray = [];
     for (let i = 0; i < parsedDefinitionSyntax.length; i++) {

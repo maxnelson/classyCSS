@@ -18,6 +18,11 @@ export const generateFileContent = (
   addDefaultValue(arrayOfFinalValues, "initial");
   addDefaultValue(arrayOfFinalValues, "inherit");
   addDefaultValue(arrayOfFinalValues, "unset");
+  arrayOfFinalValues = [
+    ...new Map(
+      arrayOfFinalValues.map((arr) => [JSON.stringify(arr), arr])
+    ).values(),
+  ];
   arrayOfFinalValues.forEach((value) => {
     returnValue += createCSSRuleFromPropertyValue(
       propertyName,

@@ -8,6 +8,9 @@ export function createCSSRuleFromPropertyValue(propertyName, propertyValue) {
   if (propertyValueFormatted.startsWith("#")) {
     propertyValueClassFriendly = lookupColorClassName(propertyValueFormatted);
   }
+  if (propertyValueFormatted.startsWith("var(")) {
+    propertyValueClassFriendly = fixVarValueFormat(propertyValueFormatted);
+  }
   const className = "." + propertyName + "-" + propertyValueClassFriendly;
   const classRule =
     className + " {\n  " + propertyName + ": " + propertyValue + ";\n}\n";
@@ -29,15 +32,16 @@ export const createCSSRuleFromCustomPrimitiveValue = (
   return classRule;
 };
 
+const fixVarValueFormat = (propertyValueFormatted) => {
+  const returnValue = propertyValueFormatted.slice(
+    propertyValueFormatted.indexOf("--") + 2,
+    -1
+  );
+  return returnValue;
+};
 const lookupColorClassName = (propertyValueFormatted) => {
-  if (
-    Object.values(customPrimitiveValuesArray.color).includes(
-      propertyValueFormatted
-    )
-  ) {
-    const keyClassName = Object.entries(customPrimitiveValuesArray.color).find(
-      ([key, value]) => value === propertyValueFormatted
-    )?.[0];
-    return keyClassName;
-  }
+  const keyClassName = Object.entries(customPrimitiveValuesArray.color).find(
+    ([key, value]) => value === propertyValueFormatted
+  )?.[0];
+  return keyClassName;
 };
