@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "fs";
 
 export const diffCSS = () => {
   // Read the contents of the two CSS files
-  const cssFile1 = readFileSync("dist/main-version1.css", "utf8");
+  const cssFile1 = readFileSync("dist/difftool/main-version1.css", "utf8");
   const cssFile2 = readFileSync("dist/main.css", "utf8");
   // Extract classnames using a regex
   const extractClassnames = (cssContent) => {
@@ -17,7 +17,7 @@ export const diffCSS = () => {
   );
   // Write the array of unique classnames to the JSON file
   writeFileSync(
-    "dist/diffedCSS.json",
+    "dist/difftool/diffedCSS.json",
     JSON.stringify(uniqueClassnames, null, 2),
     "utf8"
   );
