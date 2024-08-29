@@ -52,7 +52,17 @@ npm install @modularmoon/classycss --save-dev
 
 ### Configuration
 
-2. Update the plugins object of your `vite.config` file to include the following plugin function.
+2. Include the following import statement in your `vite.config` file:
+
+```js
+import classyCSSPlugin from "@modularmoon/classycss";
+```
+
+```
+Note: make sure not to include any "}" characters in the import statement. Since this is the default module exported by the package.
+```
+
+3. So that you can then update the plugins object of your `vite.config` file to include the following plugin function:
 
 ```js
 classyCSSPlugin({
@@ -73,13 +83,17 @@ For clarity, your entire config object should look something like this:
     ...],
     server: {...}});</code></pre>
 
-3. Adjust the value of the 'contentPaths' property to make sure it includes all the files in your project which may contain html classNames.<sup>\*</sup>
-4. Adjust the value of the 'outputFilePath' property to point to the directory where you store your .css files, with whatever filename you prefer.
-5. From now on, whenever you update any of the files located under any of the filepaths specified as a value of the 'contentPaths' parameter, it will run the purgeCSS command and trim the generated CSS file to only include classNames that are used in your project.
+## Configuration Options
 
-   Make a change to any one of those files in order to run the script for the first time, and generate the file to the filepath specified as the value of the 'outputFilePath' parameter.
+`contentPaths` (Required): The value of this parameter should be filepath that matches all the files you want classyCSS to scan for classNames<sup>\*</sup>.
 
-6. Now you can link to this local CSS file as a stylesheet via your preferred method.
+`outputFilePath` (Required): The value of this parameter should be the filepath/filename location where you want classyCSS to generate it's CSS file. This should typically be wherever you keep your CSS files within your project.
+
+6. From now on, whenever you update any of the files located under any of the filepaths specified as a value of the `contentPaths` parameter, it will run the purgeCSS command and trim the generated CSS file to only include classNames that are used in your project.
+
+Make a change to any one of those files in order to run the script for the first time, and generate the file to the filepath specified as the value of the 'outputFilePath' parameter.
+
+7. Now you can link to this local CSS file as a stylesheet via your preferred method.
 
 i.e. via HTML:
 
@@ -93,11 +107,13 @@ or via Javascript:
 import "./css/classyCSS.css";
 ```
 
-7. Viola! You're done. Add and remove classNames as needed and the classyCSS.css file will adjust itself to only include rules for classNames found in the project.
+8. Viola! You're done. Add and remove classNames as needed and the classyCSS.css file will adjust itself to only include rules for classNames found in the project.
 
 ### Optional Additional Configuration
 
-\*You can add additional properties to the classyCSSPlugin()'s argument object, such as 'safelist'.For more information, see the list of available configuration parameters here: https://purgecss.com/configuration.html
+\*You can add additional properties to the classyCSSPlugin()'s argument object, such as 'safelist'.For more information, see the list of available configuration parameters here:
+
+https://purgecss.com/configuration.html
 
 You can optionally define your own variable values, such as lengths and colors, by creating a file titled 'variableValues.json' and creating objects for each variable value you want to customly define. For reference, see the default 'variableValues.json' file that comes in the npm directory.
 
