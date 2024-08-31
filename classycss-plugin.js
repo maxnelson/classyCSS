@@ -1,6 +1,5 @@
 import { PurgeCSS } from "purgecss";
 import fs from "fs";
-import path from "path";
 
 export default function classyCSSPlugin(options) {
   return {
